@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Searchbar, ImageGallery, Modal, Button, Loader } from './components';
 import { fetchImages } from 'api';
 

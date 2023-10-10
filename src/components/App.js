@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './styles.css'
 import { fetchImages } from 'api';
-import Searchbar from './Searchbar/Searchbar';
+import Searchbar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 
