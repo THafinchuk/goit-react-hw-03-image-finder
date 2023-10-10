@@ -1,27 +1,34 @@
-import Modal from 'react-modal';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { StyledModal } from './ModalStyled';
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '800',
-    height: '600',
-    zIndex: '1300',
-    padding: 0,
-  },
-};
+class Modal extends Component {
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyPress);
+  }
 
-Modal.setAppElement('#root');
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyPress);
+  }
 
-export const GalleryModal = ({ isOpen, image, onRequestClose }) => {
-  const { largeImageURL, tags } = image;
-  return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
-      <img src={largeImageURL} alt={tags} />
-    </Modal>
-  );
-};
+  handleKeyPress = e => {
+    if (e.key === 'Escape') {
+      this.props.closeModal();
+    }
+  };
+
+  static propTypes = {
+    closeModal: PropTypes.func.isRequired,
+  };
+
+  render() {
+    const { children, closeModal } = this.props;
+    return (
+      <StyledModal onClick={closeModal}>
+        <div className="modal">{children}</div>
+      </StyledModal>
+    );
+  }
+}
+
+export default Modal;

@@ -1,9 +1,23 @@
-import { GalleryImg, GalleryItem } from './ImageGalleryItem.styled';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export const ImageGalleryItem = ({ image, openModal }) => {
+const ImageGalleryItem = ({ imageUrl, onClick }) => {
   return (
-    <GalleryItem key={image.id} onClick={() => openModal(image)}>
-      <GalleryImg src={image.webformatURL} alt={image.tags} />
-    </GalleryItem>
+    <li
+      className="ImageGalleryItem"
+      onClick={event => {
+        event.stopPropagation(); 
+        onClick(); 
+      }}
+    >
+      <img className="ImageGalleryItem-image" src={imageUrl} alt="" />
+    </li>
   );
 };
+
+ImageGalleryItem.propTypes = {
+  imageUrl: PropTypes.string,
+  onClick: PropTypes.func.isRequired, 
+};
+
+export default ImageGalleryItem;

@@ -1,44 +1,53 @@
-import { Component } from 'react';
-import {
-  SearchForm,
-  SearchFormBtn,
-  SearchFormBtnLabel,
-  SearchFormInput,
-  SearchbarStyled,
-} from './SearchBar.styled';
-import { toast } from 'react-hot-toast';
+import React from 'react';
 
-export class SearchBar extends Component {
+import PropTypes from 'prop-types';
+
+import { StyledFilter } from './SearchStyled';
+
+class Searchbar extends React.Component {
   state = {
-    query: '',
+    searchValue: '',
   };
-  handleSumbmit = e => {
+
+  handleSubmit = e => {
     e.preventDefault();
-    const search = e.currentTarget.elements.query.value.trim();
-    if (!search) {
-      return toast.error('Please fill in the field!');
-    }
-    this.props.onSubmit(search);
-    this.setState({
-      query: '',
-    });
+
+    this.props.onSubmit(this.state.searchValue);
+    this.setState(() => ({ searchValue: '' }));
   };
+
+  handleSearchTermChange = ({ target: { value, name } }) => {
+    this.setState(() => ({ [name]: value }));
+  };
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   render() {
+    const { searchValue } = this.state;
+
     return (
-      <SearchbarStyled>
-        <SearchForm onSubmit={this.handleSumbmit}>
-          <SearchFormBtn type="submit">
-            <SearchFormBtnLabel>Search</SearchFormBtnLabel>
-          </SearchFormBtn>
-          <SearchFormInput
+      <StyledFilter>
+        <form className="SearchForm" onSubmit={this.handleSubmit}>
+          <button type="submit" className="SearchForm-button">
+            <span className="SearchForm-button-label">Search</span>
+          </button>
+
+          <input
+            onChange={this.handleSearchTermChange}
+            className="SearchForm-input"
             type="text"
-            name="query"
             autoComplete="off"
             autoFocus
+            name="searchValue"
+            value={searchValue}
             placeholder="Search images and photos"
           />
-        </SearchForm>
-      </SearchbarStyled>
+        </form>
+      </StyledFilter>
     );
   }
 }
+
+export default Searchbar;

@@ -1,5 +1,20 @@
-import { InfinitySpin } from 'react-loader-spinner';
+import React from 'react';
+import { Circles } from 'react-loader-spinner';
 
-export const Loader = () => {
-  return <InfinitySpin width="200" color="#3f51b5" />;
+const Loader = () => {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <Circles
+        height="80"
+        width="80"
+        color="#c84dd1"
+        ariaLabel="circles-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    </div>
+  );
 };
+
+export default Loader;
