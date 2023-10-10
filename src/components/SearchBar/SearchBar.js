@@ -1,7 +1,5 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
 import { StyledFilter } from './SearchStyled';
 
 class Searchbar extends React.Component {
