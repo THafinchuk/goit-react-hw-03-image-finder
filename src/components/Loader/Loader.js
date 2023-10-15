@@ -1,7 +1,7 @@
 import React from 'react';
 import { Circles } from 'react-loader-spinner';
 
-const Loader = () => {
+export const Loader = () => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <Circles
@@ -17,4 +17,3 @@ const Loader = () => {
   );
 };
 
-export default Loader;

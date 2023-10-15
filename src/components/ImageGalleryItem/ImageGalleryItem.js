@@ -1,23 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { ModalImage } from 'components/Modal/Modal';
+import { GalleryItem, GalleryItemImg } from './ImageGalleryItem.styled';
 
-const ImageGalleryItem = ({ imageUrl, onClick }) => {
-  return (
-    <li
-      className="ImageGalleryItem"
-      onClick={event => {
-        event.stopPropagation(); 
-        onClick(); 
-      }}
-    >
-      <img className="ImageGalleryItem-image" src={imageUrl} alt="" />
-    </li>
-  );
-};
+import React, { Component } from 'react';
 
-ImageGalleryItem.propTypes = {
-  imageUrl: PropTypes.string,
-  onClick: PropTypes.func.isRequired, 
-};
+export default class ImageGalleryItem extends Component {
+  state = {
+    isOpen: false,
+  };
 
-export default ImageGalleryItem;
+  toggleModal = () => {
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen,
+    }));
+  };
+
+  render() {
+    const { webformatURL, largeImageURL, tag } = this.props;
+    return (
+      <GalleryItem>
+        <GalleryItemImg
+          src={webformatURL}
+          alt={tag}
+          onClick={this.toggleModal}
+        />
+        {this.state.isOpen && (
+          <ModalImage
+            url={largeImageURL}
+            name={tag}
+            modalOpen={this.state.isOpen}
+            modalClose={this.toggleModal}
+          />
+        )}
+      </GalleryItem>
+    );
+  }
+}

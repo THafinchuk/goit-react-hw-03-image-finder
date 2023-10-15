@@ -1,34 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { StyledModal } from './ModalStyled';
+import ReactModal from 'react-modal';
 
-class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyPress);
-  }
+ReactModal.setAppElement('#root');
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyPress);
-  }
-
-  handleKeyPress = e => {
-    if (e.key === 'Escape') {
-      this.props.closeModal();
-    }
-  };
-
-  static propTypes = {
-    closeModal: PropTypes.func.isRequired,
-  };
-
-  render() {
-    const { children, closeModal } = this.props;
-    return (
-      <StyledModal onClick={closeModal}>
-        <div className="modal">{children}</div>
-      </StyledModal>
-    );
-  }
-}
-
-export default Modal;
+export const ModalImage = ({ url, name, modalOpen, modalClose }) => {
+  return (
+    <ReactModal
+      isOpen={modalOpen}
+      onRequestClose={() => modalClose()}
+      style={{
+        overlay: {},
+        content: {
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)',
+          width: '50vw',
+          padding: '0',
+        },
+      }}
+    >
+      <img src={url} alt={name} />
+    </ReactModal>
+  );
+};

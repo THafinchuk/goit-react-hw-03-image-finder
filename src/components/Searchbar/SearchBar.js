@@ -1,51 +1,52 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { StyledFilter } from './SearchStyled';
+import React, { Component } from 'react';
 
-class Searchbar extends React.Component {
+import {
+  Header,
+  SearchForm,
+  SearchFormBtn,
+  SearchFormBtnLabel,
+  SearchFormInput,
+} from './SearchStyled';
+
+export class Searchbar extends Component {
   state = {
-    searchValue: '',
+    query: '',
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
-    this.props.onSubmit(this.state.searchValue);
-    this.setState(() => ({ searchValue: '' }));
+  handleSubmit = evt => {
+    evt.preventDefault();
+    this.props.onSubmit(this.state.query);
+    this.setState({ query: '' });
   };
 
-  handleSearchTermChange = ({ target: { value, name } }) => {
-    this.setState(() => ({ [name]: value }));
+  handleChange = evt => {
+    this.setState({
+      [evt.target.name]: evt.target.value,
+    });
   };
 
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-  };
 
   render() {
-    const { searchValue } = this.state;
-
     return (
-      <StyledFilter>
-        <form className="SearchForm" onSubmit={this.handleSubmit}>
-          <button type="submit" className="SearchForm-button">
-            <span className="SearchForm-button-label">Search</span>
-          </button>
+      <Header>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <SearchFormBtn type="submit" className="SearchForm-button">
+            <SearchFormBtnLabel>
+              <span>Search</span>
+            </SearchFormBtnLabel>
+          </SearchFormBtn>
 
-          <input
-            onChange={this.handleSearchTermChange}
-            className="SearchForm-input"
+          <SearchFormInput
+            onChange={this.handleChange}
+            value={this.state.query}
             type="text"
+            name="query"
             autoComplete="off"
             autoFocus
-            name="searchValue"
-            value={searchValue}
             placeholder="Search images and photos"
           />
-        </form>
-      </StyledFilter>
+        </SearchForm>
+      </Header>
     );
   }
 }
-
-export default Searchbar;
